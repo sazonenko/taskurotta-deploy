@@ -1,5 +1,6 @@
 #Location of Spring application context:
-contextLocation: "classpath*:context/appContext.xml, classpath*:context/console-context.xml"
+contextLocation: "classpath*:context/context-common.xml, classpath*:context/context-simple.xml, classpath*:context/console-context.xml"
+#contextLocation: "classpath*:context/context-test.xml, classpath*:context/console-context.xml"
 
 #Used for static resource serving in development mode
 assets:
@@ -11,75 +12,51 @@ actorConfig:
   actorPreferences:
     - id: "default"
       timeoutPolicies:
-#        PROCESS_START_TO_CLOSE: "skipping holidays 1 day timeout"
-#        PROCESS_SCHEDULE_TO_START: "timeout 15 seconds"
-#        PROCESS_SCHEDULE_TO_CLOSE: "timeout 15 seconds"
         TASK_START_TO_CLOSE: "TIMEOUT: 15 seconds"
-#        TASK_SCHEDULE_TO_START: "timeout 15 seconds"
-#        TASK_SCHEDULE_TO_CLOSE: "timeout 15 seconds"
-#        TASK_POLL_TO_COMMIT: "timeout 15 seconds"
-#        TASK_RELEASE_TO_COMMIT: "timeout 15 seconds"
-
-#List of expiration policies available for actors:
-#  expirationPolicies:
-#    - name: "timeout 15 seconds"
-#      className: "ru.taskurotta.server.config.expiration.impl.TimeoutPolicy"
-#      properties:
-#        timeout: 15
-#        timeUnit: "SECONDS"
-#    - name: "retriable 60 seconds timeout"
-#      className: "ru.taskurotta.server.config.expiration.impl.TimeoutWithFixedRetryPolicy"
-#      properties:
-#        timeout: 60
-#        timeUnit: "SECONDS"
-#        retry: 10
-#    - name: "skipping holidays 1 day timeout"
-#      className: "ru.taskurotta.server.config.expiration.impl.SkippingHolidaysTimeoutPolicy"
-#      properties:
-#        timeout: "1 days"
-#        location: "target/classes/holidays.txt"
-#        format: "yyyy-MM-dd"
 
 #Task server common properties (will be available as placeholders in spring context):
 properties:
   pollDelay: 10
   pollDelayUnit: "SECONDS"
-  retryTimes: 10
-  recovery.schedule: "*/35 * * * * ?"
-  recovery.period: 2
-  recovery.period.unit: "DAYS"
-  recovery.timeStep: 1
-  recovery.timeStep.unit: "DAYS"
+  hz.mancenter.enabled: true
+  hz.mancenter.url: "http://172.16.4.111:8080/mancenter-2.6"
+  hz.decisions.core.pool.size: 64
+  hz.decisions.max.pool.size: 128
+
+#resourceBeans:
+#  - taskStarterResource
+#  - taskReleaserResource
 
 #Http server configuration:
 logging:
-    level: INFO
+    level: WARN
     loggers:
-        ru.taskurotta: INFO
-        ru.taskurotta.backend.console: DEBUG
-        ru.taskurotta.dropwizard.resources.console: DEBUG
-#        ru.taskurotta.backend.queue: DEBUG
-#        ru.taskurotta.backend: INFO
-#        ru.taskurotta.server.recovery: DEBUG
+        com.hazelcast: INFO
+        ru.taskurotta.dropwizard.server.core: INFO
+        ru.taskurotta.server: INFO
+        ru.taskurotta.server.recovery.RetryEnqueueRecovery: DEBUG
+        ru.taskurotta.test.monkey.AbstractMonkeyAspect: INFO
+        ru.taskurotta.dropwizard.hz: DEBUG
         com.yammer: INFO
     file:
         enabled: true
         archive: true
-        currentLogFilename: ./target/logs/service.log
-        archivedLogFilenamePattern: ./target/logs/service-%d.log.gz
+        currentLogFilename: ./logs/service.log
+        archivedLogFilenamePattern: ./logs/service-%d.log.gz
+        logFormat: "%-4r [%t] %-5p %c - %m%n"
+
 http:
-    port: 8080
-    adminPort: 9998
     rootPath: "/rest/*"
     gzip:
         enabled: false
     requestLog:
         console:
+            # If true, log requests to stdout.
             enabled: false
         file:
             enabled: false
             archive: true
             currentLogFilename: ./target/logs/requests.log
-            archivedLogFilenamePattern: ./target/logs/service-%d.log.gz
+            archivedLogFilenamePattern: ./target/logs/requests-%d.log.gz
 #config can be extended here
 #http://dropwizard.codahale.com/manual/core/#configuration-defaults
