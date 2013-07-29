@@ -1,0 +1,1 @@
+java -jar lib/wf-recipes-0.2.0-SNAPSHOT.jar -f config-recipes.yml
