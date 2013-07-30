@@ -15,7 +15,7 @@ actorConfig:
     - id: "ru.taskurotta.example.calculate.worker.Multiplier#1.0"
       queueName: "qb$multiplier"
     - id: "ru.taskurotta.recipes.multiplier.MultiplierDecider#1.0"
-    - queueName: "qb$multiplier_decider"
+      queueName: "qb$multiplier_decider"
     - id: "ru.taskurotta.example.calculate.worker.NumberGenerator#1.0"
       queueName: "qb$number_generator"
     - id: "ru.taskurotta.example.calculate.worker.Summarizer#1.0"
