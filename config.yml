@@ -57,7 +57,7 @@ logging:
 http:
     port: 8090
     adminPort: 8091
-
+    rootPath: "/rest/*"
     gzip:
         enabled: false
 
