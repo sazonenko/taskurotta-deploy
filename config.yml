@@ -65,3 +65,4 @@ logback:
             - FILE:
                 key: ref
 
+# smart comment
