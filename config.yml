@@ -23,7 +23,7 @@ actorConfig:
 
 #Task server common properties (will be available as placeholders in spring context):
 properties:
-  db.url: "jdbc:oracle:thin:@ora1-vip.fccland.ru:testext"
+  db.url: "jdbc:oracle:thin:@db1.fccland.ru:orcl.fccland.ru"
   db.user: "taskurotta"
   db.password: "taskurotta"
   db.validating: true  #validate queues existence in DB
