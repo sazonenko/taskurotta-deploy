@@ -83,4 +83,4 @@ http:
             archivedLogFilenamePattern: ./target/logs/service-%d.log.gz
 #config can be extended here
 #http://dropwizard.codahale.com/manual/core/#configuration-defaults
-#### smart comment
+#### smart comment 1
